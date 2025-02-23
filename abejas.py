@@ -1,3 +1,5 @@
+import mysql.connector
+
 class Cliente: 
     def __init__(self, nombre, _DNI, cantidad_kilos, pago_compra, repetir_compra):
         self.nombre = nombre
@@ -33,3 +35,22 @@ cliente2 = Cliente("Ariel", 2333, 25, True, True)
 # Salida de datos
 print(f"\nEl cliente {cliente1.nombre}, con DNI {cliente1._numero_dni}, compró {cliente1.cantidad} kilos, con un precio total de {cliente1.precio} pesos. {cliente1.repetir_compra()} {cliente1.pago_de_compra()}")
 print(f"El cliente {cliente2.nombre}, con DNI {cliente2._numero_dni}, compró {cliente2.cantidad} kilos, con un precio total de {cliente2.precio} pesos. {cliente2.repetir_compra()} {cliente2.pago_de_compra()}")
+
+conn = mysql.connector.connect(
+user='root',
+password='camilaroot',
+host='127.0.0.1',
+database='tienda',
+port='3306'
+)
+
+cursor = conn.cursor()
+
+query = "SELECT * FROM producto"
+# Ejecutar la consulta SQL
+cursor.execute(query)
+
+for fila in cursor.fetchall():
+    print(f"Id: {fila[0]}, Nombre: {fila[1]}, Precio: {fila[2]}")
+cursor.close()
+conn.close()
